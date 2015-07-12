@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">#EAB71E</item>
+        <item name="android:windowFrame">#EAB71E</item>
+
+        <item name="android:background">#291C16</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+</resources>
