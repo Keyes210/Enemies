@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:paddingBottom="4dp"
                 android:paddingTop="4dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 tools:background="#291C16">
 
 
@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/nameLabel"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:text="Nothing"
+        android:paddingLeft="8dp"
         android:textColor="#EAB71E"
         android:textSize="20sp"
         android:textStyle="bold"/>
+
 
 </RelativeLayout>

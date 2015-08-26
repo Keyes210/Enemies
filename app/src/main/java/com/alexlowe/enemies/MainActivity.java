@@ -1,10 +1,14 @@
 package com.alexlowe.enemies;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +25,9 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends Activity {
+    public static final String ENEMY_DETAIL_KEY = "book";
+    public static final String LIST_INSTANCE_STATE = "savedList";
 
     protected TextView mAddTextView;
     protected TextView mLabel;
@@ -29,8 +35,8 @@ public class MainActivity extends ListActivity {
     ListView mNames;
 
 
-    ArrayList<String> listItems = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    ArrayList<Enemy> listItems = new ArrayList<Enemy>();
+    EnemyAdapter adapter;
 
 
     @Override
@@ -43,26 +49,73 @@ public class MainActivity extends ListActivity {
         mLabel.setTypeface(customFont);
 
         mNames = (ListView) findViewById(android.R.id.list);
-
         mAddTextView = (TextView) findViewById(R.id.addEnemy);
-        adapter = new ArrayAdapter<String>(this,
-                R.layout.list_textview,
-                listItems);
-        setListAdapter(adapter);
 
+        adapter = new EnemyAdapter(this, listItems);
+        mNames.setAdapter(adapter);
+
+        if(savedInstanceState!=null) {
+            Parcelable listInstanceState = savedInstanceState.getParcelable(LIST_INSTANCE_STATE);
+            mNames.onRestoreInstanceState(listInstanceState);
+        }
+
+        setupAddClick();
+        setupItemClick();
+        setupLongClick();
+
+    }
+
+    private void setupItemClick() {
+        mNames.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra(ENEMY_DETAIL_KEY, adapter.getItem(position));
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupLongClick() {
+        mNames.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+                adb.setTitle("Delete?");
+                adb.setMessage("Would you like to delete entry?");
+                final int positionToRemove = position;
+                adb.setNegativeButton("Cancel", null);
+                adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        listItems.remove(positionToRemove);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                adb.show();
+                return false;
+            }
+        });
+    }
+
+    private void addItems(String name) {
+        Enemy enemy = new Enemy(name);
+        listItems.add(enemy);
+        adapter.notifyDataSetChanged();
+    }
+
+
+
+    private void setupAddClick(){
         mAddTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Add Enemy");
-                // Set up the input
+
                 final EditText input = new EditText(MainActivity.this);
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 builder.setView(input);
-
-                // Set up the buttons
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -78,47 +131,17 @@ public class MainActivity extends ListActivity {
                     }
                 });
 
-                //builder.show();
-
-
                 //this is to actually show the dialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
         });
-
-        mNames.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
-                adb.setTitle("Delete?");
-                adb.setMessage("Would you like to delete entry?");
-                final int positionToRemove = position;
-                adb.setNegativeButton("Cancel", null);
-                adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        listItems.remove(positionToRemove);
-                        adapter.notifyDataSetChanged();
-                    }});
-                adb.show();
-
-                return false;
-            }
-        });
-
     }
-
-    private void addItems(String name) {
-        listItems.add(name);
-        adapter.notifyDataSetChanged();
-    }
-
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(LIST_INSTANCE_STATE, mNames.onSaveInstanceState());
     }
 
 

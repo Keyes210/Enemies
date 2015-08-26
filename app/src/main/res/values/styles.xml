@@ -7,7 +7,7 @@
 
     <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:textColor">#EAB71E</item>
-        <item name="android:windowFrame">#EAB71E</item>
+
 
         <item name="android:background">#291C16</item>
         <item name="android:textSize">12sp</item>
