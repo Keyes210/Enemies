@@ -3,4 +3,7 @@
 
     <drawable name="pressed_color">#80D9D9D9</drawable>
     <drawable name="normal_color">#00FFFFFF</drawable>
+    <color name="primary_color">#291C16</color>
+    <color name="secondary_color">#EAB71E</color>
+    <color name="third_color">#FFD9D9D9</color>
 </resources>

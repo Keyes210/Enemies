@@ -6,4 +6,5 @@
     <string name="title_activity_add_enemies">Add Enemies</string>
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="detail_hint">What have they done that\'s so bad?</string>
 </resources>
