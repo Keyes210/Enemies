@@ -2,19 +2,16 @@ package com.alexlowe.enemies;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Alex on 7/12/2015.
  */
 public class Enemy implements Serializable {
     String name;
-    ArrayList<String> descriptions = new ArrayList<>();
-    Date time;
+    ArrayList<Reason> reasons = new ArrayList<>();
 
     public Enemy(String name){
         this.name = name;
-        this.time = new Date();
     }
 
     public String getName() {
@@ -25,16 +22,14 @@ public class Enemy implements Serializable {
         this.name = name;
     }
 
-    public ArrayList<String> getDescriptions() {
-        return descriptions;
+    public ArrayList<Reason> getReasons() {
+        return reasons;
     }
 
-    public void setDescriptions(ArrayList<String> descriptions) {
-        this.descriptions = descriptions;
+    public void setReasons(ArrayList<Reason> reasons) {
+        this.reasons = reasons;
     }
 
-    public Date getTime() {
-        return time;
-    }
+
 
 }

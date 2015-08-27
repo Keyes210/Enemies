@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -13,20 +13,24 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/secondary_color"
         android:id="@+id/detailNameTV"
-        android:layout_gravity="top|center_horizontal"
-        android:paddingBottom="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="35dp"
         />
+
+
 
 
     <ListView
         android:id="@+id/lvReason"
+        android:layout_below="@+id/detailNameTV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
     </ListView>
 
-    <com.software.shell.fab.ActionButton
+ <!--   <com.software.shell.fab.ActionButton
         android:id="@+id/action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +51,20 @@
         fab:shadowResponsiveEffect_enabled="false"
         fab:show_animation="@anim/fab_roll_from_down"
         fab:hide_animation="@anim/fab_roll_to_down"
-        />
+        />-->
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitXY"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/fab_plus"
+        fab:fab_colorNormal="@color/secondary_color"
+        fab:fab_colorPressed="@color/third_color"
+        fab:fab_colorRipple="@color/primary_color" />
 
 
-</FrameLayout>
+</RelativeLayout>

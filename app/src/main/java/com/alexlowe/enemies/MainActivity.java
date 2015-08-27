@@ -32,7 +32,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
     public static final String ENEMY_DETAIL_KEY = "book";
     public static final String LIST_INSTANCE_STATE = "savedList";
-    public String toast = "Please Enter a Name";
+
 
     protected TextView mAddTextView;
     protected TextView mLabel;
@@ -109,7 +109,7 @@ public class MainActivity extends Activity {
     }
 
     private void addItems(String name) {
-        Enemy enemy = new Enemy(name);
+        final Enemy enemy = new Enemy(name);
         listItems.add(enemy);
         adapter.notifyDataSetChanged();
     }
@@ -133,8 +133,6 @@ public class MainActivity extends Activity {
                         name = input.getText().toString();
                         if (name.length() > 1) {
                             addItems(name);
-                        } else {
-                            Toast.makeText(getBaseContext(), toast, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -173,8 +171,6 @@ public class MainActivity extends Activity {
                 name = input.getText().toString();
                 if(name.length() > 1) {
                     enemy.setName(name);
-                }else{
-                    Toast.makeText(getBaseContext(), toast, Toast.LENGTH_SHORT).show();
                 }
             }
         });

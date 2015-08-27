@@ -5,12 +5,31 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:textColor">#EAB71E</item>
-
-
-        <item name="android:background">#291C16</item>
-        <item name="android:textSize">12sp</item>
+    <!--<style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:alertDialogStyle">@style/CustomDialogTheme</item>
+        AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this, R.style.CustomDialogTheme);
     </style>
+-->
+    <!--<style name="CustomDialogTheme" >
+        <item name="android:textColorPrimary">#FF00</item>
+        <item name="android:textColor">@color/secondary_color</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:background">@color/primary_color</item>
+        <item name="android:textColorSecondary">#FF00</item>
+        <item name="android:colorBackground">@color/secondary_color</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowBackground">@color/transparent_color</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:textColorAlertDialogListItem">@color/secondary_color</item>
+        <item name="android:actionBarStyle">@style/DialogAB</item>
+    </style>
+
+    <style name="DialogAB" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@color/secondary_color</item>
+    </style>-->
+
 
 </resources>
