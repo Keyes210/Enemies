@@ -105,7 +105,7 @@ public class DetailActivity extends Activity {
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String desc = input.getText().toString();
+                        String desc = input.getText().toString().trim();
                             if (desc.length() > 1) {
                                 Reason reason = new Reason(desc);
                                 enemies.add(reason);
@@ -186,8 +186,9 @@ public class DetailActivity extends Activity {
 
         final TextView countTV = new TextView(DetailActivity.this);
         final EditText input = new EditText(DetailActivity.this);
-        input.setHint(R.string.detail_hint);
+        input.setText(reason.getDescription());
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+
 
         TextWatcher txwatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -208,6 +209,7 @@ public class DetailActivity extends Activity {
 
         input.addTextChangedListener(txwatcher);
         input.setSingleLine(false);
+        input.setSelection(input.getText().toString().length());
 
         LinearLayout ll=new LinearLayout(getApplicationContext());
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -218,7 +220,7 @@ public class DetailActivity extends Activity {
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String desc = input.getText().toString();
+                String desc = input.getText().toString().trim();
                 if(desc.length() > 1) {
                     reason.setDescription(desc);
                 }

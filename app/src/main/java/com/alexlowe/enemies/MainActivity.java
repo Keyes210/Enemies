@@ -43,6 +43,8 @@ public class MainActivity extends Activity {
     ArrayList<Enemy> listItems = new ArrayList<Enemy>();
     EnemyAdapter adapter;
 
+    Toast toast = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class MainActivity extends Activity {
         adapter = new EnemyAdapter(this, listItems);
         mNames.setAdapter(adapter);
 
-        if(savedInstanceState!=null) {
+        if (savedInstanceState != null) {
             Parcelable listInstanceState = savedInstanceState.getParcelable(LIST_INSTANCE_STATE);
             mNames.onRestoreInstanceState(listInstanceState);
         }
@@ -115,8 +117,7 @@ public class MainActivity extends Activity {
     }
 
 
-
-    private void setupAddClick(){
+    private void setupAddClick() {
         mAddTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +131,7 @@ public class MainActivity extends Activity {
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        name = input.getText().toString();
+                        name = input.getText().toString().trim();
                         if (name.length() > 1) {
                             addItems(name);
                         }
@@ -157,19 +158,20 @@ public class MainActivity extends Activity {
         outState.putParcelable(LIST_INSTANCE_STATE, mNames.onSaveInstanceState());
     }
 
-    private void editName(final Enemy enemy){
+    private void editName(final Enemy enemy) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Edit Enemy Name");
 
         final EditText input = new EditText(MainActivity.this);
-
+        input.setText(enemy.getName());
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        input.setSelection(input.getText().toString().length());
         builder.setView(input);
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                name = input.getText().toString();
-                if(name.length() > 1) {
+                name = input.getText().toString().trim();
+                if (name.length() > 1) {
                     enemy.setName(name);
                 }
             }
@@ -187,29 +189,46 @@ public class MainActivity extends Activity {
         validateInput(dialog, input);
     }
 
-    private void validateInput(AlertDialog dialog, final EditText input){
+    private void validateInput(AlertDialog dialog, final EditText input) {
         final Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         button.setEnabled(false);
         input.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+                                         @Override
+                                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                         }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // my validation condition
-                if (input.getText().length() > 0) {
-                    button.setEnabled(true);
-                } else {
-                    button.setEnabled(false);
-                }
-            }
+                                         @Override
+                                         public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                             // my validation condition
+                                             if (input.getText().length() > 0) {
+                                                 button.setEnabled(true);
+                                                 if (input.getText().length() > 30) {
+                                                     displayToast("Names must be less than 30 characters");
+                                                     button.setEnabled(false);
+                                                 } else {
+                                                     button.setEnabled(true);
+                                                 }
+                                             } else {
+                                                 button.setEnabled(false);
+                                             }
+                                         }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                                         @Override
+                                         public void afterTextChanged(Editable s) {
+                                         }
+                                     }
+        );
+    }
 
-            }
-        });
+    public void displayToast(String message) {
+        if(toast != null){
+            toast.cancel();
+        }else{
+            toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+
     }
 
 
