@@ -28,6 +28,7 @@
         android:divider="#FFD9D9D9"
         android:dividerHeight="1dp"
         android:layout_below="@+id/imageView"
+        android:layout_above="@+id/theButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/border_ui"
@@ -63,4 +64,10 @@
         android:layout_alignParentStart="true"
         android:textStyle="bold"/>
 
+    <Button
+        android:id="@+id/theButton"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:onClick="checkUp"/>
 </RelativeLayout>

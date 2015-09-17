@@ -24,6 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -231,7 +233,11 @@ public class MainActivity extends Activity {
 
     }
 
-
+    public void checkUp(View view) {
+        Gson gson = new Gson();
+        String jsonEnemies = gson.toJson(listItems);
+        Log.d("rimjob","jsonEnemies = " + jsonEnemies);
+    }
 }
 
 
