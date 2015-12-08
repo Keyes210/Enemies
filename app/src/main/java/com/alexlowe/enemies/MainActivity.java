@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
     Type listOfReasons = new TypeToken<ArrayList<Reason>>(){}.getType();
 
 
-    ArrayList<Enemy> listItems = new ArrayList<Enemy>();
+    ArrayList<Enemy> listItems;
     EnemyAdapter adapter;
 
     Toast toast = null;
@@ -54,6 +54,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listItems = retrieveEnemies();
 
         mLabel = (TextView) findViewById(R.id.appLabel);
         Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/Summeron.ttf");
@@ -244,7 +246,7 @@ public class MainActivity extends Activity {
 
         SharedPreferences savedStats = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = savedStats.edit();
-        editor.putString("alex", jsonEnemies);
+        editor.putString("savedEnemies", jsonEnemies);
 
         editor.apply();
     }
@@ -252,6 +254,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        retrieveReasons();
+    }
+
+    private void retrieveReasons(){
         SharedPreferences sp = getSharedPreferences(TEMP_REASONS, 0);
         if(sp.contains("key")) {
             Gson gson = new Gson();
@@ -264,12 +270,27 @@ public class MainActivity extends Activity {
             for(Enemy enemy : listItems){
                 if(enemy.getName().equals(enemyName)){
                     enemy.setReasons(reasons);
-                    String jsonEnemies = gson.toJson(listItems);;
+                    String jsonEnemies = gson.toJson(listItems);
                 }
             }
         }
+    }
 
+    private ArrayList<Enemy> retrieveEnemies(){
+        ArrayList<Enemy> list;
+        SharedPreferences sp = getSharedPreferences(PREFS_NAME, 0);
+        if(sp.contains("savedEnemies")) {
+            Gson gson = new Gson();
+            String enemyString = sp.getString("savedEnemies", "ERROR");
 
+            ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+            enemies = gson.fromJson(enemyString, listOfEnemies);
+            list = enemies;
+        }else{
+            list = new ArrayList<Enemy>();
+        }
+
+        return list;
     }
 }
 
