@@ -249,10 +249,11 @@ public class DetailActivity extends Activity {
         validateCount(dialog, input);
     }
 
-    public void checkReasons(View view) {
+    @Override
+    protected void onPause() {
+        super.onPause();
         Gson gson = new Gson();
         String reasonsJson = gson.toJson(enemies, listOfReasons);
-        Log.d("rimjob", "jsonReasons = " + reasonsJson);
 
         SharedPreferences sp = getSharedPreferences(TEMP_REASONS, 0);
         SharedPreferences.Editor editor = sp.edit();
@@ -260,6 +261,8 @@ public class DetailActivity extends Activity {
         editor.putString("key", enemy.getName());
         editor.apply();
     }
+
+
 
 
 }

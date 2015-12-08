@@ -2,7 +2,6 @@ package com.alexlowe.enemies;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,11 +13,8 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,11 +24,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends Activity {
@@ -47,7 +40,7 @@ public class MainActivity extends Activity {
     private String name;
     ListView mNames;
 
-    Type listOfTestObject = new TypeToken<ArrayList<Enemy>>(){}.getType();
+    Type listOfEnemies = new TypeToken<ArrayList<Enemy>>(){}.getType();
     Type listOfReasons = new TypeToken<ArrayList<Reason>>(){}.getType();
 
 
@@ -242,33 +235,18 @@ public class MainActivity extends Activity {
 
     }
 
-    public void checkUp(View view) {
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         Gson gson = new Gson();
-        String jsonEnemies = gson.toJson(listItems, listOfTestObject);
-        Log.d("rimjob","jsonEnemies = " + jsonEnemies);
+        String jsonEnemies = gson.toJson(listItems, listOfEnemies);
 
         SharedPreferences savedStats = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = savedStats.edit();
         editor.putString("alex", jsonEnemies);
 
         editor.apply();
-    }
-
-    public void checkUp2(View view) {
-        ArrayList<Enemy> test = new ArrayList<Enemy>();
-        SharedPreferences sp = getSharedPreferences(PREFS_NAME, 0);
-
-        Gson gson = new Gson();
-
-        String playerStr = sp.getString("alex", "No data");
-
-
-        test = gson.fromJson(playerStr, listOfTestObject);
-
-        for(Enemy enemy : test){
-            Log.i("rimjob", enemy.getName());
-        }
-
     }
 
     @Override
@@ -286,8 +264,7 @@ public class MainActivity extends Activity {
             for(Enemy enemy : listItems){
                 if(enemy.getName().equals(enemyName)){
                     enemy.setReasons(reasons);
-                    String jsonEnemies = gson.toJson(listItems);
-                    Log.i("rimjob", jsonEnemies);
+                    String jsonEnemies = gson.toJson(listItems);;
                 }
             }
         }
