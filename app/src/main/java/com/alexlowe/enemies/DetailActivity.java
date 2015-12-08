@@ -171,7 +171,7 @@ public class DetailActivity extends Activity {
                 AlertDialog.Builder adb = new AlertDialog.Builder(DetailActivity.this);
                 adb.setTitle("Delete/Edit Entry");
                 adb.setNegativeButton("Cancel", null);
-                adb.setNeutralButton("Edit Name", new DialogInterface.OnClickListener() {
+                adb.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Reason reason = adapter.getItem(position);
