@@ -66,5 +66,12 @@
         fab:fab_colorPressed="@color/third_color"
         fab:fab_colorRipple="@color/primary_color" />
 
+    <Button
+        android:id="@+id/theButton3"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:onClick="checkReasons"/>
+
 
 </RelativeLayout>

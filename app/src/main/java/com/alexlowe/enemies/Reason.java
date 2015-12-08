@@ -1,5 +1,6 @@
 package com.alexlowe.enemies;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -7,7 +8,7 @@ import java.util.Locale;
 /**
  * Created by Alex on 8/26/2015.
  */
-public class Reason {
+public class Reason implements Serializable{
     private String description;
     private Date time;
 

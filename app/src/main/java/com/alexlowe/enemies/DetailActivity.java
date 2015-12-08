@@ -3,12 +3,14 @@ package com.alexlowe.enemies;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,14 +20,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.melnykov.fab.FloatingActionButton;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
 public class DetailActivity extends Activity {
 
 
+    private static final String TEMP_REASONS = "tempReasons";
     TextView detailName;
     ListView lvReasons;
     CardAdapter adapter;
@@ -33,6 +39,10 @@ public class DetailActivity extends Activity {
     ArrayList<Reason> enemies;
 
     FloatingActionButton actionButton;
+
+    private Enemy enemy;
+
+    Type listOfReasons = new TypeToken<ArrayList<Reason>>(){}.getType();
 
 
     @Override
@@ -50,7 +60,7 @@ public class DetailActivity extends Activity {
         Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/Summeron.ttf");
         detailName.setTypeface(customFont);
 
-        final Enemy enemy = (Enemy) getIntent().getSerializableExtra(MainActivity.ENEMY_DETAIL_KEY);
+        enemy = (Enemy) getIntent().getSerializableExtra(MainActivity.ENEMY_DETAIL_KEY);
         enemies = enemy.getReasons();
 
         detailName.setText(enemy.getName());
@@ -81,9 +91,9 @@ public class DetailActivity extends Activity {
 
                     public void onTextChanged(CharSequence s, int start, int before, int cont) {
                         countTV.setText(String.valueOf(s.length()) + "/280");
-                        if(s.length() > 280){
+                        if (s.length() > 280) {
                             countTV.setTextColor(Color.RED);
-                        }else{
+                        } else {
                             countTV.setTextColor(Color.BLACK);
                         }
                     }
@@ -95,7 +105,7 @@ public class DetailActivity extends Activity {
                 input.addTextChangedListener(txwatcher);
                 input.setSingleLine(false);
 
-                LinearLayout ll=new LinearLayout(getApplicationContext());
+                LinearLayout ll = new LinearLayout(getApplicationContext());
                 ll.setOrientation(LinearLayout.VERTICAL);
                 ll.addView(input);
                 ll.addView(countTV);
@@ -106,9 +116,9 @@ public class DetailActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String desc = input.getText().toString().trim();
-                            if (desc.length() > 1) {
-                                Reason reason = new Reason(desc);
-                                enemies.add(reason);
+                        if (desc.length() > 1) {
+                            Reason reason = new Reason(desc);
+                            enemies.add(reason);
                         }
                     }
                 });
@@ -238,5 +248,18 @@ public class DetailActivity extends Activity {
         dialog.show();
         validateCount(dialog, input);
     }
+
+    public void checkReasons(View view) {
+        Gson gson = new Gson();
+        String reasonsJson = gson.toJson(enemies, listOfReasons);
+        Log.d("rimjob", "jsonReasons = " + reasonsJson);
+
+        SharedPreferences sp = getSharedPreferences(TEMP_REASONS, 0);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(enemy.getName(), reasonsJson);
+        editor.putString("key", enemy.getName());
+        editor.apply();
+    }
+
 
 }
