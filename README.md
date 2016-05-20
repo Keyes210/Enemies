@@ -2,7 +2,7 @@
 ORIGINAL, complete. An app about about the people you hate. 
 
 
-This a pretty simple note taking app. I wanted to make it unique, so it serves a very specific purpose. The idea is you that list your enemies and the reasons why. <br />
+This is a pretty simple note taking app. I wanted to make it unique, so it serves a very specific purpose. The idea is you that list your enemies and the reasons why. <br />
 <br />
 
 <img src="https://raw.githubusercontent.com/Keyes210/Enemies/master/app/ScreenShots/device-2015-07-12-152441.png" width="200">
