@@ -46,5 +46,17 @@ Users can add Enemies to their list. Long presses of each list item bring up the
 &nbsp;
 &nbsp;
 <img src="https://raw.githubusercontent.com/Keyes210/Enemies/master/app/ScreenShots/device-2015-12-08-234015.png" width="200">
-
+<br/>
+<br/>
+<b> I've also documented the process of making this app on my blog:</b>
+<br/>
+<a href="https://medium.com/@keyes210/enemies-bea5c3ec333e#.vxvrzxoxr">Part 1</a>
+<br/>
+<a href="https://medium.com/@keyes210/enemies-ii-8e68dd694a0b#.239byan9z">Part 2</a>
+<br/>
+<a href="https://medium.com/@keyes210/enemies-iii-cfa07ea7cef9#.fyr8eowrd">Part 3</a>
+<br/>
+<a href="https://medium.com/@keyes210/enemies-iv-b4821c1dd7fa#.3dsnazs3i">Part 4</a>
+<br/>
+<a href="https://medium.com/@keyes210/enemies-vi-my-own-worst-enemy-6a6f698db7b#.xoj6gyksv">Part 5</a>
 
